@@ -235,22 +235,42 @@ h3{font-size:var(--d3);line-height:1.1;font-weight:700;letter-spacing:-.02em}
     <div class="co-reveal">
       <div class="co-feedwrap">
         <div class="bank"></div>
-        <svg class="co-diver" viewBox="0 0 260 280" aria-hidden="true">
+        <svg class="co-diver" viewBox="0 0 260 300" aria-hidden="true">
           <defs>
-            <linearGradient id="suitG" x1=".5" y1="0" x2=".5" y2="1"><stop offset="0" stop-color="#2c323e"/><stop offset="1" stop-color="#10131a"/></linearGradient>
+            <linearGradient id="cdSuit" x1=".5" y1="0" x2=".5" y2="1"><stop offset="0" stop-color="#4b5666"/><stop offset=".5" stop-color="#2b323d"/><stop offset="1" stop-color="#12161d"/></linearGradient>
+            <radialGradient id="cdHelm" cx="40%" cy="28%" r="78%"><stop offset="0" stop-color="#697585"/><stop offset=".65" stop-color="#2c333d"/><stop offset="1" stop-color="#161b22"/></radialGradient>
+            <radialGradient id="cdGlow" cx="50%" cy="46%" r="55%"><stop offset="0" stop-color="rgba(35,201,239,.20)"/><stop offset="1" stop-color="transparent"/></radialGradient>
           </defs>
-          <g fill="url(#suitG)" stroke="url(#suitG)" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M92,82 Q130,72 168,82 L162,196 Q130,208 98,196 Z"/>
-            <path d="M94,98 Q60,108 32,82 Q24,76 22,80 Q24,90 38,102 Q56,118 86,118 Z"/>
-            <path d="M166,98 Q200,108 228,82 Q236,76 238,80 Q236,90 222,102 Q204,118 174,118 Z"/>
-            <path d="M100,182 Q80,224 56,250 Q50,256 54,258 Q66,254 86,240 Q106,224 116,196 Z"/>
-            <path d="M160,182 Q180,224 204,250 Q210,256 206,258 Q194,254 174,240 Q154,224 144,196 Z"/>
-            <ellipse cx="130" cy="58" rx="26" ry="22"/>
+          <ellipse cx="130" cy="150" rx="100" ry="120" fill="url(#cdGlow)"/>
+          <g stroke="#cfe6f5" stroke-linecap="round" opacity=".22">
+            <line x1="40" y1="20" x2="40" y2="70" stroke-width="2"/><line x1="222" y1="30" x2="222" y2="86" stroke-width="2"/>
+            <line x1="20" y1="120" x2="20" y2="178" stroke-width="2"/><line x1="244" y1="150" x2="244" y2="206" stroke-width="2"/>
           </g>
-          <rect x="118" y="38" width="24" height="9" rx="2.5" fill="#0a1320" opacity=".95"/>
-          <circle cx="138" cy="42.5" r="2" fill="#ff5d5d" opacity=".95"/>
-          <path d="M104,98 L108,194" fill="none" stroke="#23c9ef" stroke-width="2.2" opacity=".55"/>
-          <path d="M156,98 L152,194" fill="none" stroke="#23c9ef" stroke-width="2.2" opacity=".55"/>
+          <g fill="none" stroke="url(#cdSuit)" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M112,104 L72,86 L62,50" stroke-width="23"/>
+            <path d="M148,104 L188,86 L198,50" stroke-width="23"/>
+            <path d="M118,176 L80,206 L66,172" stroke-width="27"/>
+            <path d="M142,176 L180,206 L194,172" stroke-width="27"/>
+          </g>
+          <path d="M103,98 C95,126 102,158 113,180 L147,180 C158,158 165,126 157,98 Q130,87 103,98 Z" fill="url(#cdSuit)"/>
+          <path d="M117,108 Q130,103 143,108 Q139,150 130,170 Q121,150 117,108 Z" fill="#5d6a7a" opacity=".4"/>
+          <circle cx="62" cy="49" r="10.5" fill="#3c4450"/><circle cx="198" cy="49" r="10.5" fill="#3c4450"/>
+          <ellipse cx="64" cy="171" rx="12" ry="9" fill="#1b212a" transform="rotate(-28 64 171)"/>
+          <ellipse cx="196" cy="171" rx="12" ry="9" fill="#1b212a" transform="rotate(28 196 171)"/>
+          <rect x="121" y="79" width="18" height="17" rx="7" fill="#2b323d"/>
+          <ellipse cx="130" cy="62" rx="26.5" ry="24.5" fill="url(#cdHelm)"/>
+          <path d="M107,60 Q130,78 153,60 Q150,72 130,73 Q110,72 107,60 Z" fill="#0c141d" opacity=".9"/>
+          <path d="M111,60 Q130,71 149,60" fill="none" stroke="#9fd8ec" stroke-width="2" opacity=".55"/>
+          <rect x="115" y="39" width="30" height="12.5" rx="3" fill="#0e1418" stroke="#23c9ef" stroke-width="1.2"/>
+          <rect x="116" y="40" width="28" height="3" rx="1.5" fill="#23c9ef" opacity=".85"/>
+          <line x1="139" y1="39" x2="143" y2="28" stroke="#23c9ef" stroke-width="1.6"/><circle cx="143" cy="27" r="1.9" fill="#67e8f9"/>
+          <g fill="none" stroke="#e4f3fc" stroke-linecap="round" opacity=".72">
+            <path d="M110,101 L74,85" stroke-width="2.6"/><path d="M150,101 L186,85" stroke-width="2.6"/>
+            <path d="M74,85 L65,52" stroke-width="2.2"/><path d="M186,85 L195,52" stroke-width="2.2"/>
+            <path d="M104,100 Q99,128 110,156" stroke-width="2"/><path d="M156,100 Q161,128 150,156" stroke-width="2"/>
+          </g>
+          <path d="M115,104 L120,174" stroke="#23c9ef" stroke-width="2.4" fill="none" opacity=".5"/>
+          <path d="M145,104 L140,174" stroke="#23c9ef" stroke-width="2.4" fill="none" opacity=".5"/>
         </svg>
         <div class="co-hud">
           <span class="live"><b>●</b>&nbsp;LIVE · 14 ms</span>

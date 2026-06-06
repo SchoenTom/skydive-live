@@ -334,6 +334,10 @@ section + section{border-top:1px solid rgba(255,255,255,.055)}
               <stop offset="0" stop-color="#ffffff"/><stop offset=".65" stop-color="#bcccd6"/><stop offset="1" stop-color="#7f93a0"/></radialGradient>
             <radialGradient id="backglow" cx="50%" cy="46%" r="55%">
               <stop offset="0" stop-color="rgba(34,211,238,.22)"/><stop offset="1" stop-color="transparent"/></radialGradient>
+            <linearGradient id="flySuit" x1=".5" y1="0" x2=".5" y2="1">
+              <stop offset="0" stop-color="#4b5666"/><stop offset=".5" stop-color="#2b323d"/><stop offset="1" stop-color="#12161d"/></linearGradient>
+            <radialGradient id="flyHelm" cx="40%" cy="28%" r="78%">
+              <stop offset="0" stop-color="#697585"/><stop offset=".65" stop-color="#2c333d"/><stop offset="1" stop-color="#161b22"/></radialGradient>
           </defs>
           <rect x="0" y="330" width="400" height="70" fill="url(#grnd)"/>
           <ellipse cx="200" cy="172" rx="82" ry="100" fill="url(#backglow)"/>
@@ -347,35 +351,38 @@ section + section{border-top:1px solid rgba(255,255,255,.055)}
           <path id="beamDipole" class="beam" d="M204 168 Q252 282 200 348" fill="none" stroke="#4ec3ec" stroke-width="6" opacity="0"/>
           <!-- realistic jumper: boxman/arch silhouette, filled with gradient + rim-light -->
           <g id="diver" transform="rotate(0 200 170)">
-            <g class="dvr">
-              <g fill="none" stroke="url(#suitDark)" stroke-linecap="round" stroke-linejoin="round">
-                <!-- legs: hip -> knee (90deg) -> heel up -->
-                <path d="M189 193 L165 219 L181 248" stroke-width="21"/>
-                <path d="M211 193 L235 219 L219 248" stroke-width="21"/>
-                <!-- arms (boxman): shoulder -> elbow -> hands at eye level -->
-                <path d="M181 157 L151 145 L157 117" stroke-width="18"/>
-                <path d="M219 157 L249 145 L243 117" stroke-width="18"/>
+            <!-- realistic belly-fly (box position): arms bent up, knees bent (boots up/out), arched torso -->
+            <g class="dvr" transform="translate(96,74) scale(0.8)">
+              <g fill="none" stroke="url(#flySuit)" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M112,104 L72,86 L62,50" stroke-width="23"/>
+                <path d="M148,104 L188,86 L198,50" stroke-width="23"/>
+                <path d="M118,176 L80,206 L66,172" stroke-width="27"/>
+                <path d="M142,176 L180,206 L194,172" stroke-width="27"/>
               </g>
-              <!-- boots + hands -->
-              <g fill="#39474155"><circle cx="181" cy="250" r="10"/><circle cx="219" cy="250" r="10"/></g>
-              <circle cx="157" cy="115" r="8.5" fill="#dde4df"/><circle cx="243" cy="115" r="8.5" fill="#dde4df"/>
-              <!-- torso, slightly arched, gradient filled -->
-              <path d="M180 152 Q200 145 220 152 Q224 176 215 197 Q200 206 185 197 Q176 176 180 152 Z" fill="url(#suit)"/>
-              <!-- rim-light on torso (top-left) -->
-              <path d="M181 153 Q200 146 214 151" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" opacity=".9"/>
-              <!-- neck + helmet -->
-              <rect x="193" y="138" width="14" height="13" rx="5" fill="#92a59b"/>
-              <circle cx="200" cy="125" r="18" fill="url(#helmetG)"/>
-              <path d="M188 119 a16 16 0 0 1 18 -8" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity=".75"/>
-              <!-- visor -->
-              <path d="M186 128 q14 9 28 0 q-3 8 -14 8 q-11 0 -14 -8 Z" fill="#2c3a40" opacity=".55"/>
+              <path d="M103,98 C95,126 102,158 113,180 L147,180 C158,158 165,126 157,98 Q130,87 103,98 Z" fill="url(#flySuit)"/>
+              <path d="M117,108 Q130,103 143,108 Q139,150 130,170 Q121,150 117,108 Z" fill="#5d6a7a" opacity=".4"/>
+              <circle cx="62" cy="49" r="10.5" fill="#3c4450"/><circle cx="198" cy="49" r="10.5" fill="#3c4450"/>
+              <ellipse cx="64" cy="171" rx="12" ry="9" fill="#1b212a" transform="rotate(-28 64 171)"/>
+              <ellipse cx="196" cy="171" rx="12" ry="9" fill="#1b212a" transform="rotate(28 196 171)"/>
+              <rect x="121" y="79" width="18" height="17" rx="7" fill="#2b323d"/>
+              <ellipse cx="130" cy="62" rx="26.5" ry="24.5" fill="url(#flyHelm)"/>
+              <path d="M107,60 Q130,78 153,60 Q150,72 130,73 Q110,72 107,60 Z" fill="#0c141d" opacity=".9"/>
+              <path d="M111,60 Q130,71 149,60" fill="none" stroke="#9fd8ec" stroke-width="2" opacity=".55"/>
               <!-- THE SENDER on the helmet (our product) -->
-              <rect x="190" y="103" width="20" height="11" rx="2.6" fill="#0e1418" stroke="#22d3ee" stroke-width="1" opacity=".98"/>
-              <rect x="190.5" y="103.5" width="19" height="2.4" rx="1.4" fill="#22d3ee" opacity=".85"/>
+              <rect x="115" y="39" width="30" height="12.5" rx="3" fill="#0e1418" stroke="#22d3ee" stroke-width="1.2"/>
+              <rect x="116" y="40" width="28" height="3" rx="1.5" fill="#22d3ee" opacity=".85"/>
+              <!-- rim light (sky behind) -->
+              <g fill="none" stroke="#e4f3fc" stroke-linecap="round" opacity=".72">
+                <path d="M110,101 L74,85" stroke-width="2.6"/><path d="M150,101 L186,85" stroke-width="2.6"/>
+                <path d="M74,85 L65,52" stroke-width="2.2"/><path d="M186,85 L195,52" stroke-width="2.2"/>
+                <path d="M104,100 Q99,128 110,156" stroke-width="2"/><path d="M156,100 Q161,128 150,156" stroke-width="2"/>
+              </g>
+              <path d="M115,104 L120,174" stroke="#22d3ee" stroke-width="2.4" fill="none" opacity=".5"/>
+              <path d="M145,104 L140,174" stroke="#22d3ee" stroke-width="2.4" fill="none" opacity=".5"/>
             </g>
             <!-- antenna nubs on the sender: patch (belly side) / dipole (sky side) -->
-            <circle id="nubPatch"  class="nub live" cx="195" cy="116" r="6" fill="#22d3ee"/>
-            <circle id="nubDipole" class="nub" cx="205" cy="103" r="5" fill="#2a6f88"/>
+            <circle id="nubPatch"  class="nub live" cx="196" cy="110" r="6" fill="#22d3ee"/>
+            <circle id="nubDipole" class="nub" cx="205" cy="99" r="5" fill="#2a6f88"/>
           </g>
         </svg>
       </div>
