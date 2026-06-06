@@ -10,7 +10,7 @@
 [![live 3D](https://img.shields.io/badge/live-interactive%203D-22d3ee?style=for-the-badge&logo=googlechrome&logoColor=white)](https://schoentom.github.io/skydive-live/)
 [![pitch deck](https://img.shields.io/badge/pitch%20deck-open-ff4081?style=for-the-badge)](decks/pitch_EN.html)
 
-**[▶ Spin it in 3D](https://schoentom.github.io/skydive-live/)** · **[Pitch deck](decks/pitch_EN.html)** · **[The numbers](ENGINEERING.md)** · **[Build it](BUILD.md)**
+**[▶ Spin it in 3D](https://schoentom.github.io/skydive-live/#model)** · **[Pitch deck](decks/pitch_EN.html)** · **[The numbers](ENGINEERING.md)** · **[Build it](BUILD.md)**
 
 </div>
 
@@ -125,6 +125,30 @@ This is not a hobby gamble. Every critical path is calculated, and **honestly sp
 </div>
 
 **① 3D-print** (verified watertight STLs) → **② prep components** → **③ assembly stack** (antenna → VTX flat → camera → cover) → **④ wiring & power** (MOSFET fan control, conformal coating) → **⑤ fit tests A–F**. Full step-by-step in [`BUILD.md`](BUILD.md).
+
+---
+
+## The printed parts & how the housing assembles
+
+<div align="center">
+<img src="renders/print_parts.svg" alt="Exploded view of the seven printed parts — cover, antenna module, electronics sled, body, battery tray, side door, antenna shell — with their roles and the seven-step assembly sequence." width="100%">
+</div>
+
+Seven printed parts (ASA), each **watertight and collision-checked**. Grab the STLs from the **[v1.0 release](../../releases/tag/v1.0)**.
+
+| part | role | print note |
+|---|---|---|
+| **Body** | main shell · integral heat-wall · side battery door · flat GoPro mount (M5×0.8) | open-top-up · tree-support under the 2 GoPro fingers |
+| **Cover** | top lid · GORE pressure-vent · 4× M3 into heat-sets | flat, no supports |
+| **Electronics sled** | carries the VTX + camera, drops in above the heat-wall | no supports |
+| **Antenna module** | clips into the top — holds the λ/2 dipole + RF switch (Gen 2) | minimal |
+| **Antenna shell** | bottom — holds the down-facing patch antenna | minimal |
+| **Battery tray** | 3S LiPo · slide-in, push-detent + lanyard (won't open in freefall) | no supports |
+| **Battery door** | side, tool-free — swap a battery between jumps | minimal (hinge) |
+
+**Assembly:** ① heat-sets into the body → ② patch into the shell, mount underneath → ③ load the tray, slide it in → ④ VTX + camera on the sled, drop in and wire through the heat-wall → ⑤ dipole + RF switch into the module → ⑥ cover on (4× M3) → ⑦ close the door.
+
+**Print:** ASA (never PLA — it softens too low) · **+0.8 % isotropic shrink** · 0.2 mm layers · perimeters that fully fill the 3.0 mm wall · enclosure + heated bed. Fasteners: **M2/M3 brass heat-sets** (no self-tappers) + an M5×0.8 GoPro thumbscrew. Full step-by-step in [`BUILD.md`](BUILD.md).
 
 ---
 

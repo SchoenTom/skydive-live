@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 660" width="1080" height="660" role="img" aria-label="The printed parts and how the housing assembles: cover, antenna module, electronics sled, main body, battery tray, side door, antenna shell — printed in ASA, assembled in seven steps.">
+<defs>
+  <linearGradient id="ppbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c1320"/><stop offset="1" stop-color="#0a0e16"/></linearGradient>
+  <style>
+    .mono{font-family:ui-monospace,"SF Mono",Menlo,monospace}.sans{font-family:-apple-system,"Segoe UI",Roboto,sans-serif}
+    @keyframes flo{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+    #stack g.pt{animation:flo 5s ease-in-out infinite}
+    #stack g.pt:nth-child(2){animation-delay:.3s}#stack g.pt:nth-child(3){animation-delay:.6s}
+    #stack g.pt:nth-child(4){animation-delay:.9s}#stack g.pt:nth-child(5){animation-delay:1.2s}
+    #stack g.pt:nth-child(6){animation-delay:1.5s}#stack g.pt:nth-child(7){animation-delay:1.8s}
+  </style>
+</defs>
+<rect width="1080" height="660" fill="url(#ppbg)"/>
+<text x="48" y="50" class="mono" font-size="15" letter-spacing="3" fill="#7186a0">THE PRINTED PARTS · HOW THE HOUSING GOES TOGETHER</text>
+<text x="48" y="84" class="sans" font-size="26" font-weight="800" fill="#f4f7fb">Seven printed parts. <tspan fill="#22d3ee">One robust shell.</tspan></text>
+
+<!-- exploded stack (top → bottom as they sit). cx=250 -->
+<g id="stack">
+  <!-- helper: each plate = top face (light) + front slab (color) -->
+  <!-- 1 Cover -->
+  <g class="pt"><polygon points="120,128 380,128 410,112 150,112" fill="#cfd6dd"/><rect x="120" y="128" width="260" height="20" fill="#aeb7c0"/>
+    <text x="430" y="130" class="sans" font-size="17" font-weight="700" fill="#f4f7fb">Cover</text>
+    <text x="430" y="150" class="sans" font-size="13" fill="#9fc4e2">top lid · GORE vent · 4× M3 into heat-sets</text></g>
+  <!-- 2 Antenna module -->
+  <g class="pt"><polygon points="150,182 350,182 378,168 178,168" fill="#7fcf99"/><rect x="150" y="182" width="200" height="16" fill="#4f9e6a"/>
+    <text x="430" y="184" class="sans" font-size="17" font-weight="700" fill="#f4f7fb">Antenna module</text>
+    <text x="430" y="204" class="sans" font-size="13" fill="#9fc4e2">clips in the top · holds the λ/2 dipole + RF switch (Gen 2)</text></g>
+  <!-- 3 Sled -->
+  <g class="pt"><polygon points="140,236 360,236 388,222 168,222" fill="#d8c08a"/><rect x="140" y="236" width="220" height="16" fill="#b89a5c"/>
+    <text x="430" y="238" class="sans" font-size="17" font-weight="700" fill="#f4f7fb">Electronics sled</text>
+    <text x="430" y="258" class="sans" font-size="13" fill="#9fc4e2">carries VTX + camera side-by-side · drops in above the heat-wall</text></g>
+  <!-- 4 Body (biggest) -->
+  <g class="pt"><polygon points="110,300 410,300 440,280 140,280" fill="#3a414c"/><rect x="110" y="300" width="300" height="58" fill="#2b323d"/>
+    <rect x="408" y="318" width="22" height="30" fill="#2b323d"/>
+    <!-- gopro fingers -->
+    <rect x="180" y="358" width="14" height="22" fill="#2b323d"/><rect x="210" y="358" width="14" height="22" fill="#2b323d"/>
+    <text x="460" y="312" class="sans" font-size="17" font-weight="700" fill="#f4f7fb">Body</text>
+    <text x="460" y="332" class="sans" font-size="13" fill="#9fc4e2">main shell · integral heat-wall · side battery door</text>
+    <text x="460" y="350" class="sans" font-size="13" fill="#9fc4e2">flat GoPro mount underneath (M5×0.8)</text></g>
+  <!-- 5 Battery tray -->
+  <g class="pt"><polygon points="150,420 350,420 376,408 176,408" fill="#9aa3ad"/><rect x="150" y="420" width="200" height="18" fill="#7c858f"/>
+    <text x="430" y="422" class="sans" font-size="17" font-weight="700" fill="#f4f7fb">Battery tray</text>
+    <text x="430" y="442" class="sans" font-size="13" fill="#9fc4e2">3S LiPo · slide-in, push-detent + lanyard (won't open in freefall)</text></g>
+  <!-- 6 Door -->
+  <g class="pt"><polygon points="160,470 330,470 354,460 184,460" fill="#3a414c"/><rect x="160" y="470" width="170" height="16" fill="#2b323d"/>
+    <text x="430" y="472" class="sans" font-size="17" font-weight="700" fill="#f4f7fb">Battery door</text>
+    <text x="430" y="492" class="sans" font-size="13" fill="#9fc4e2">side, tool-free — swap a battery between jumps</text></g>
+  <!-- 7 Antenna shell -->
+  <g class="pt"><polygon points="140,522 360,522 386,510 166,510" fill="#7fcf99"/><rect x="140" y="522" width="220" height="16" fill="#4f9e6a"/>
+    <text x="430" y="524" class="sans" font-size="17" font-weight="700" fill="#f4f7fb">Antenna shell</text>
+    <text x="430" y="544" class="sans" font-size="13" fill="#9fc4e2">bottom · holds the down-facing patch antenna</text></g>
+</g>
+<!-- exploded centre guide -->
+<line x1="250" y1="120" x2="250" y2="538" stroke="#22d3ee" stroke-dasharray="3 7" opacity=".35"/>
+
+<!-- bottom band: assembly sequence + print -->
+<line x1="48" y1="578" x2="1032" y2="578" stroke="rgba(255,255,255,.1)"/>
+<text x="48" y="606" class="mono" font-size="12" letter-spacing="2" fill="#67e8f9">ASSEMBLE</text>
+<text x="48" y="628" class="sans" font-size="14" fill="#cfdcea">① heat-sets into the <tspan fill="#fff">body</tspan> → ② patch into the <tspan fill="#fff">shell</tspan>, mount underneath → ③ load <tspan fill="#fff">tray</tspan>, slide in → ④ VTX+camera on the <tspan fill="#fff">sled</tspan>, drop in &amp; wire through the heat-wall</text>
+<text x="48" y="648" class="sans" font-size="14" fill="#cfdcea">→ ⑤ dipole+switch into the <tspan fill="#fff">module</tspan> → ⑥ <tspan fill="#fff">cover</tspan> on (4× M3) → ⑦ close the <tspan fill="#fff">door</tspan>.  <tspan fill="#7186a0">Material: ASA · +0.8 % shrink · 3.0 mm walls · print open-top-up.</tspan></text>
+</svg>
