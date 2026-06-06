@@ -64,7 +64,7 @@ The complete printed system, and the proof the concept holds together. **Self-th
 
 ### ② Gen 2 — v5 · *Never lose the image*
 
-**A body is a shadow.** Belly-down (face down), the antenna points cleanly at the ground. Go **head-down** (falling head-first) and the jumper's own body slides between transmitter and ground — a single antenna tears off, right at the most spectacular moment. So Gen 2 carries **two**: a patch that looks down, a dipole up top, and an RF switch that picks the better one in real time. Both sit **flush** in the shell — screwed in, no stuck-on bump, no snag risk.
+**A body is a shadow.** Belly-down (face down), the antenna points cleanly at the ground. Go **head-down** (falling head-first) and the jumper's own body slides between transmitter and ground — a single antenna tears off, right at the most spectacular moment. So Gen 2 carries **two**: a patch flush in the side end-cap and a dipole up top, and an RF switch that picks the better one in real time. Both sit **flush** in the shell — screwed in, no stuck-on bump, no snag risk.
 
 <div align="center">
 <img src="renders/headdown_loop.svg" alt="When the jumper turns head-first, one antenna drops to no signal; the second antenna takes over and the picture holds." width="100%">
@@ -86,7 +86,7 @@ Every block has its place — justified thermally and by RF. **Colour = componen
 |---|---|---|---|
 | 🟠 **Camera** | the eye | HD wide-angle skydive POV; lens flush through the front wall — nothing protrudes to snag | HDZero Micro V3 |
 | 🟦 **VTX** | the radio heart | turns the picture into a 1 W signal, ~14 ms, reaches 4 km with margin | HDZero Freestyle V2 |
-| 🟩 **Antenna** | the link | patch radiates down to the DZ; RHCP for clean reception (Gen 2 adds the up-facing dipole) | TBS 5G8 RHCP patch |
+| 🟩 **Antenna** | the link | patch in the flush side end-cap covers the ground link; RHCP; Gen 2 adds the up-facing dipole | TBS 5G8 RHCP patch |
 | 🟦 **Battery** | the energy | 3S LiPo in a protected, tool-free swap tray; externally charged | 3S LiPo + BMS |
 
 ---
@@ -133,7 +133,7 @@ This is not a hobby gamble. Every critical path is calculated, and **honestly sp
 *(This is the 7-part Gen 2 build. Prefer the simpler **Gen 1 · MK2** — 3 PETG parts? Its own plan is in [`BUILD.md`](BUILD.md).)*
 
 <div align="center">
-<img src="renders/print_parts.svg" alt="Exploded view of the seven printed parts — cover, antenna module, electronics sled, body, battery tray, side door, antenna shell — with their roles and the seven-step assembly sequence." width="100%">
+<img src="renders/print_parts.png" alt="Exploded view of the seven printed parts — cover, antenna module, electronics sled, body, battery tray, side door, antenna shell — with their roles and the seven-step assembly sequence." width="100%">
 </div>
 
 Seven printed parts (ASA), each **watertight and collision-checked**. **STEP files for SolidWorks** (both builds) + STL + 3MF live in [`cad/`](cad/); printable STLs are also on the **[v1.0 release](../../releases/tag/v1.0)**.
