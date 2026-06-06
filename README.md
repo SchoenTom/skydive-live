@@ -132,6 +132,6 @@ Ambitious engineering project **in development** — not a finished product, not
 
 ## Honest note
 
-A solo-built, prototype-stage project shared in full. Renders are from the project's own CAD; calculated values are marked as such and separated from what still has to be measured. Transmit power is regulated — operation here is framed around an amateur-radio **Class E** licence (with PMSE short-term assignment for the championship demo). Questions and collaboration welcome.
+A solo-built, prototype-stage project shared in full. Renders are from the project's own CAD; calculated values are marked as such and separated from what still has to be measured. Transmit power is regulated — operation here is framed around an amateur-radio **Class E** licence (with PMSE short-term assignment for the championship demo).
 
 <sub>License: <a href="LICENSE">CC-BY-4.0</a> · Renders &amp; 3D: own CAD (build123d) · Made by <a href="https://github.com/SchoenTom">@SchoenTom</a></sub>
