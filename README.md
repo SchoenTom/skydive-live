@@ -32,6 +32,20 @@ Camera (MIPI) → 1 W VTX → U.FL → antenna(s) → ~4 km of air → ground an
 
 ---
 
+## What it is, in one picture
+
+<div align="center">
+<img src="renders/gopro_size.png" alt="Action-cam size, 1-watt reach: the SkyDive·Live sender next to a GoPro for scale — same height, same helmet mount, but a real 1 W radio inside." width="100%">
+</div>
+
+### The signal's journey — helmet to the waiting-room TV
+
+<div align="center">
+<img src="renders/signal_flow.svg" alt="The signal travels: camera → 1 W radio → antenna → ~4 km of air → ground antennas → receiver → HDMI → the big TV in the waiting area, in about 14 ms." width="100%">
+</div>
+
+---
+
 ## Two generations. One idea.
 
 Hundreds of iterations distilled into **two purpose-built designs** — a proven foundation, and a leap that solves the one moment that breaks every single-antenna link.
@@ -44,11 +58,19 @@ Hundreds of iterations distilled into **two purpose-built designs** — a proven
 
 The complete printed system, and the proof the concept holds together. **Self-thinking cooling**: a sensor reads the chip temperature and the fan runs *only when it's hot* — in freefall the ram-air does the work; on the ground it runs on until everything is cool. GoPro form factor, tool-free battery swap, real off-the-shelf RF parts.
 
+<div align="center">
+<img src="renders/cooling.svg" alt="Self-thinking cooling: the fan runs only when the chip is hot; in freefall the ram-air cools it for free, ΔT about 6 K — never on a timer." width="92%">
+</div>
+
 ### ② Gen 2 — v5 · *Never lose the image*
 
-**A body is a shadow.** Belly-down, the antenna points cleanly at the ground. Go **head-down** (falling head-first) and the jumper's own body slides between transmitter and ground — a single antenna tears off, right at the most spectacular moment. So Gen 2 carries **two**: a patch that looks down, a dipole up top, and an RF switch that picks the better one in real time. Both sit **flush** in the shell — screwed in, no stuck-on bump, no snag risk.
+**A body is a shadow.** Belly-down (face down), the antenna points cleanly at the ground. Go **head-down** (falling head-first) and the jumper's own body slides between transmitter and ground — a single antenna tears off, right at the most spectacular moment. So Gen 2 carries **two**: a patch that looks down, a dipole up top, and an RF switch that picks the better one in real time. Both sit **flush** in the shell — screwed in, no stuck-on bump, no snag risk.
 
-> 🛰️ **Feel it yourself** — the interactive [dual-antenna demo](https://schoentom.github.io/skydive-live/): rotate the jumper head-down, watch the single antenna drop to *"NO SIGNAL"*, then switch on the second and watch the link hold.
+<div align="center">
+<img src="renders/headdown_loop.svg" alt="When the jumper turns head-first, one antenna drops to no signal; the second antenna takes over and the picture holds." width="100%">
+</div>
+
+> 🛰️ **Feel it yourself** — the interactive [dual-antenna demo](https://schoentom.github.io/skydive-live/): rotate the jumper head-down (head-first), watch the single antenna drop to *"NO SIGNAL"*, then switch on the second and watch the link hold.
 
 ---
 
@@ -73,6 +95,10 @@ Every block has its place — justified thermally and by RF. **Colour = componen
 
 This is not a hobby gamble. Every critical path is calculated, and **honestly split into *calculated* vs *to-be-measured*.**
 
+<div align="center">
+<img src="renders/closing_4km.svg" alt="Link budget: +30 dBm transmit, +10 dB antenna gains, −119.8 dB free-space loss at 4 km, −90 dBm receiver sensitivity → +9 dB margin. Zero-margin reach ≈ 11.6 km." width="100%">
+</div>
+
 | | value | |
 |---|---|---|
 | 📡 **Transmit power** | +30 dBm (1 W) — well under the 5 W Class-E limit | compliant |
@@ -83,9 +109,13 @@ This is not a hobby gamble. Every critical path is calculated, and **honestly sp
 | 🔋 **Runtime** | ~40 min theoretical / ~32 min practical | dimensioned |
 | ⚖️ **Sender mass** | ~200–250 g | dimensioned |
 
-> **The hard case (head-down)** is identified *and solved*: the body-shadow penalty → dual antenna at the sender **plus** diversity at the ground. The real proof comes with the first jump — **no overclaiming.**
+> **The hard case (head-down — falling head-first)** is identified *and solved*: the body-shadow penalty → dual antenna at the sender **plus** diversity at the ground. The real proof comes with the first jump — **no overclaiming.**
 
 ---
+
+<div align="center">
+<img src="renders/latency.svg" alt="Latency: SkyDive·Live ~14 ms — before you blink. The old way is footage seen only after landing. Not a recording, the present tense." width="86%">
+</div>
 
 ## Build it yourself → [`BUILD.md`](BUILD.md)
 
@@ -105,6 +135,10 @@ This is not a hobby gamble. Every critical path is calculated, and **honestly sp
 </div>
 
 A monitor on a tripod catches the signal over **two antennas** (omni + directional patch) and always shows the stronger one — true **diversity**, the same approach professional systems use. Daylight-readable with a sun-hood; an external recorder grabs an instant-playback copy; HDMI runs the same picture onto the big public-viewing TV. **Two safeguards against the same dropout — the picture gets through.**
+
+<div align="center">
+<img src="renders/diversity.svg" alt="The ground station listens on a wide omni and an aimed patch antenna and always uses the stronger one — lose one, the picture still gets through." width="72%">
+</div>
 
 ---
 

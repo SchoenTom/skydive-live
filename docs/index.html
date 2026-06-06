@@ -186,6 +186,7 @@ model-viewer{width:100%; height:70vh; min-height:380px; background-color:transpa
 .atoggle button.on{background:linear-gradient(180deg,rgba(34,211,238,.25),rgba(34,211,238,.1)); color:var(--ink)}
 .atoggle button.on small{color:var(--green2)}
 .atoggle button:focus-visible{outline:2px solid var(--cyan); outline-offset:-2px}
+.poslegend{font:600 .62rem/1.5 var(--mono); color:var(--faint); letter-spacing:.03em; text-align:center}
 .draghint{font:600 var(--small)/1.4 var(--mono); color:var(--faint); letter-spacing:.06em; text-align:center}
 .draghint b{color:var(--sky)}
 
@@ -278,6 +279,19 @@ section + section{border-top:1px solid rgba(255,255,255,.055)}
       <p>Today the ground sees a speck in the sky. SkyDive·Live puts the jumper's own view on the screen — the same moment, ~14 ms later. No skydiving knowledge required.</p>
     </div>
     <img src="dot_to_live.svg" alt="Left: what the ground sees today — a dot in the sky. Right: what SkyDive·Live shows — the freefall POV live on a monitor, same moment." style="width:100%;border-radius:16px;border:1px solid rgba(255,255,255,.08);display:block">
+  </div>
+</section>
+
+<!-- ========== 1c. ONE PICTURE + JOURNEY ========== -->
+<section id="picture">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">What it is</div>
+      <h2>Action-cam size. 1-watt reach.</h2>
+      <p>Same height as a GoPro, same helmet mount — but inside is a real 1 W radio that closes 4 km. And here's the whole path the picture takes, helmet to the waiting-room TV.</p>
+    </div>
+    <img src="gopro_size.png" alt="The SkyDive·Live sender next to a GoPro for scale — action-cam size, 1-watt reach." style="width:100%;border-radius:16px;border:1px solid rgba(255,255,255,.08);display:block;margin-bottom:22px">
+    <img src="signal_flow.svg" alt="The signal's journey: camera, 1 W radio, antenna, 4 km of air, ground antennas, receiver, HDMI, to the big TV — about 14 ms." style="width:100%;display:block">
   </div>
 </section>
 
@@ -418,6 +432,7 @@ section + section{border-top:1px solid rgba(255,255,255,.055)}
             <button data-a="1" class="on">1 antenna<small>patch only</small></button>
             <button data-a="2">2 antennas<small>patch + dipole</small></button>
           </div>
+          <div class="poslegend">Belly = face down · Sit = feet down · Head-down = head first · Back = face up</div>
           <div class="draghint">↻ <b>Drag the jumper</b> · or pick a pose · then switch on <b>2 antennas</b></div>
         </div>
       </div>
@@ -432,6 +447,7 @@ section + section{border-top:1px solid rgba(255,255,255,.055)}
       <div class="eyebrow">The numbers</div>
       <h2>Closing 4 km of sky.</h2>
     </div>
+    <img src="closing_4km.svg" alt="Link budget closing 4 km: +30 dBm transmit, −119.8 dB free-space loss, +9 dB margin, zero-margin reach 11.6 km." style="width:100%;border-radius:16px;border:1px solid rgba(255,255,255,.08);display:block;margin-bottom:24px">
     <div class="numbers">
       <div class="num"><div class="v">119.8 dB</div><div class="k">FSPL @ 4 km</div></div>
       <div class="num"><div class="v">+9 dB</div><div class="k">link margin</div></div>
@@ -440,6 +456,20 @@ section + section{border-top:1px solid rgba(255,255,255,.055)}
       <div class="num"><div class="v">1 W</div><div class="k">TX power</div></div>
     </div>
     <p style="text-align:left;font:500 .96rem/1.5 var(--sans);color:var(--muted)">Worst-case omni TX, unfavourable attitude — full link budget &amp; thermal model in <a href="https://github.com/SchoenTom/skydive-live/blob/main/ENGINEERING.md" style="color:var(--cyan);font-weight:700;text-decoration:none">ENGINEERING.md →</a></p>
+  </div>
+</section>
+
+<!-- ========== 4b. ENGINEERED ========== -->
+<section id="engineering">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">How it stays alive</div>
+      <h2>Engineered, not hoped.</h2>
+      <p>Cooling that thinks for itself, two antennas at the ground, and a picture that's there before you blink.</p>
+    </div>
+    <img src="cooling.svg" alt="Self-thinking cooling: fan runs only when hot; freefall ram-air cools it for free." style="width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.08);display:block;margin-bottom:20px">
+    <img src="diversity.svg" alt="Ground-station diversity: wide omni plus aimed patch, the receiver takes the stronger one." style="width:100%;max-width:680px;border-radius:14px;border:1px solid rgba(255,255,255,.08);display:block;margin:0 auto 20px">
+    <img src="latency.svg" alt="Latency: ~14 ms, before you blink; the old way is footage after landing." style="width:100%;max-width:760px;border-radius:14px;border:1px solid rgba(255,255,255,.08);display:block;margin:0 auto">
   </div>
 </section>
 
@@ -479,7 +509,7 @@ section + section{border-top:1px solid rgba(255,255,255,.055)}
   const screen=document.getElementById('screen'), lostWhy=document.getElementById('lostWhy'), scrnTag=document.getElementById('scrnTag'), poseLabel=document.getElementById('poseLabel'), tc=document.getElementById('tc');
   const poses=document.getElementById('poses'), atoggle=document.getElementById('atoggle');
   let theta=0, target=0, ants=1, dragging=false, lastX=0, idle=0, tcSec=12*60+4;
-  const POSE=[['BELLY','BELLY · 4-WAY',0],['SITFLY','SIT · FREEFLY',90],['HEAD-DOWN','HEAD-DOWN',180],['BACKTRACK','BACKTRACK',270]];
+  const POSE=[['BELLY · FACE DOWN','BELLY · FACE DOWN',0],['SIT · FEET DOWN','SIT · FEET DOWN',90],['HEAD-DOWN · HEAD FIRST','HEAD-DOWN · HEAD FIRST',180],['BACK · FACE UP','BACK · FACE UP',270]];
   const rad=d=>d*Math.PI/180;
   function cov(th){ // returns [patch,dipole] 0..1
     const c=Math.cos(rad(th));
