@@ -1,67 +1,478 @@
-<!doctype html>
-<html lang="de">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>SkyDive·Live — 3D</title>
-<meta property="og:title" content="SkyDive·Live — HDZero 1W Live-Stream Sender">
-<meta property="og:description" content="Der Blick des Springers aus 4000 m, live auf den Bildschirm an der Landezone. Interaktives 3D-Modell.">
+<title>SkyDive·Live — The jump. Live.</title>
+<meta name="description" content="Real-time video from freefall — the jumper's POV, live to the drop zone. A 1-watt HDZero FPV live-stream transmitter for professional skydiving.">
+<meta name="theme-color" content="#0b0d12">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="SkyDive·Live — The jump. Live.">
+<meta property="og:description" content="Real-time video from freefall — the jumper's POV, live to the drop zone. Own radio link, ~14 ms latency, Class-E.">
 <meta property="og:image" content="og.png">
+<meta property="og:url" content="https://schoentom.github.io/skydive-live/">
+<meta property="og:site_name" content="SkyDive·Live">
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SkyDive·Live — The jump. Live.">
+<meta name="twitter:description" content="Real-time video from freefall — the jumper's POV, live to the drop zone.">
+<meta name="twitter:image" content="og.png">
+
 <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
 <style>
-  :root{ --void:#050810; --ink:#f0f4ff; --dim:#8ba4c8; --teal:#00c6ff; }
-  *{ box-sizing:border-box; margin:0; -webkit-tap-highlight-color:transparent; }
-  body{ min-height:100dvh; background:var(--void); color:var(--ink);
-    font-family:-apple-system,system-ui,sans-serif; overflow:hidden; display:flex; flex-direction:column; }
-  body::before{ content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
-    background:
-      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(13,74,110,.55), transparent 60%),
-      radial-gradient(ellipse 60% 80% at 80% 0%, rgba(168,85,247,.30), transparent 50%),
-      radial-gradient(ellipse 100% 40% at 50% 100%, rgba(26,10,62,.70), transparent 60%),
-      radial-gradient(ellipse 70% 50% at 10% 80%, rgba(16,217,142,.15), transparent 50%);
-    animation:shift 20s ease-in-out infinite alternate; }
-  @keyframes shift{ 50%{ transform:scale(1.06) translate(10px,-8px);} }
-  header{ position:relative; z-index:2; text-align:center; padding:24px 18px 4px; }
-  .brand{ font-size:22px; font-weight:700; letter-spacing:.3px; }
-  .brand .live{ color:var(--teal); text-shadow:0 0 16px rgba(0,198,255,.7); }
-  .tag{ color:var(--dim); font-size:13.5px; margin-top:6px; }
-  model-viewer{ position:relative; z-index:1; flex:1; width:100%; background:transparent; }
-  .toggle{ position:relative; z-index:2; display:flex; gap:8px; justify-content:center; padding:6px 0 2px; }
-  .toggle button{ border:1px solid rgba(0,198,255,.28); background:rgba(0,198,255,.07); color:var(--dim);
-    font-size:13px; font-weight:600; padding:9px 18px; border-radius:11px; cursor:pointer; transition:.15s; }
-  .toggle button.on{ color:#001018; background:linear-gradient(135deg,#00d4ff,#0090e0); border-color:transparent; }
-  .hint{ position:relative; z-index:2; text-align:center; color:var(--dim); font-size:12px; padding:4px 0; }
-  footer{ position:relative; z-index:2; text-align:center; padding:8px 0 calc(16px + env(safe-area-inset-bottom)); }
-  footer a{ color:var(--teal); text-decoration:none; font-size:14px; font-weight:600;
-    border:1px solid rgba(0,198,255,.3); padding:9px 18px; border-radius:12px; background:rgba(0,198,255,.08); }
+:root{
+  --bg0:#0b0d12; --bg1:#0c1019; --bg2:#0e1422;
+  --ink:#f4f7fb; --muted:#aebdce; --faint:#7186a0;
+  --cyan:#22d3ee; --cyan2:#67e8f9;
+  --green:#22d3ee; --green2:#67e8f9;        /* demo accent remapped to cyan */
+  --amber:#edab28; --red:#ef5a4f; --sky:#9fc4e2;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --sans:-apple-system,"SF Pro Display","SF Pro Text",system-ui,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --mono:"SF Mono",ui-monospace,"JetBrains Mono",Menlo,monospace;
+  --pad:clamp(22px,5vw,80px);
+  --d1:clamp(2.6rem,11vw,7rem);
+  --d2:clamp(1.7rem,5vw,3.4rem);
+  --body:clamp(1rem,1.4vw,1.2rem);
+  --small:clamp(.7rem,1vw,.86rem);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg0); color:var(--ink); font-family:var(--sans);
+  -webkit-font-smoothing:antialiased; line-height:1.5; overflow-x:hidden;
+}
+a{color:inherit}
+img{max-width:100%}
+
+/* ---- background: faint grid + navy gradient (fixed, behind scrims) ---- */
+.bg{position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(ellipse 90% 60% at 50% -10%, rgba(34,211,238,.10), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 80% 110%, rgba(40,70,120,.18), transparent 60%),
+    linear-gradient(180deg,#0b0d12 0%,#0b101c 55%,#0a0d14 100%);
+}
+.bg:after{content:""; position:absolute; inset:0; opacity:.35;
+  background-image:
+    linear-gradient(rgba(120,160,210,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120,160,210,.05) 1px, transparent 1px);
+  background-size:46px 46px;
+  -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 30%, #000 0%, transparent 80%);
+          mask-image:radial-gradient(ellipse 80% 70% at 50% 30%, #000 0%, transparent 80%);
+}
+
+.wrap{max-width:1180px; margin:0 auto; padding-inline:var(--pad)}
+section{padding-block:clamp(56px,9vw,120px)}
+.eyebrow{font:700 var(--small)/1 var(--mono); letter-spacing:.34em; text-transform:uppercase; color:var(--cyan); margin-bottom:16px}
+.cy{color:var(--cyan)}
+.dim{color:var(--muted)}
+
+/* ---------- HERO ---------- */
+.hero{min-height:100svh; display:flex; flex-direction:column; justify-content:center; position:relative; padding-block:clamp(64px,12vh,140px)}
+.live-pill{display:inline-flex; align-items:center; gap:8px; align-self:flex-start;
+  font:700 .72rem/1 var(--mono); letter-spacing:.18em; text-transform:uppercase; color:var(--ink);
+  background:rgba(239,90,79,.12); border:1px solid rgba(239,90,79,.4); padding:7px 12px 7px 11px; border-radius:999px; margin-bottom:26px}
+.live-pill i{width:8px; height:8px; border-radius:50%; background:var(--red); box-shadow:0 0 10px var(--red);
+  animation:blink 1.5s steps(1) infinite}
+@keyframes blink{0%,55%{opacity:1}56%,100%{opacity:.25}}
+.wordmark{font:800 var(--d1)/.92 var(--sans); letter-spacing:-.02em; margin:0 0 6px}
+.wordmark .dotc{color:var(--cyan)}
+.tagline{font:700 var(--d2)/1 var(--sans); letter-spacing:-.01em; color:var(--ink); margin:14px 0 18px}
+.lede{font:400 var(--body)/1.5 var(--sans); color:var(--muted); max-width:54ch; margin-bottom:30px}
+
+.chips{display:flex; flex-wrap:wrap; gap:9px; margin-bottom:34px}
+.chip{font:600 .76rem/1 var(--mono); letter-spacing:.08em; color:var(--muted);
+  background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.09); padding:9px 13px; border-radius:9px;
+  white-space:nowrap}
+.chip b{color:var(--cyan); font-weight:700}
+
+.btns{display:flex; flex-wrap:wrap; gap:12px}
+.btn{display:inline-flex; align-items:center; gap:8px; font:700 .92rem/1 var(--sans); letter-spacing:.01em;
+  padding:14px 22px; border-radius:12px; text-decoration:none; transition:.2s var(--ease); cursor:pointer; border:1px solid transparent}
+.btn-primary{background:var(--cyan); color:#04222a; box-shadow:0 8px 30px rgba(34,211,238,.25)}
+.btn-primary:hover{background:var(--cyan2); transform:translateY(-2px)}
+.btn-ghost{background:rgba(255,255,255,.04); border-color:rgba(255,255,255,.14); color:var(--ink)}
+.btn-ghost:hover{border-color:var(--cyan); color:var(--cyan)}
+.btn:focus-visible{outline:2px solid var(--cyan); outline-offset:3px}
+
+/* ---------- section headings ---------- */
+.head{margin-bottom:34px}
+.head h2{font:800 clamp(1.6rem,4.4vw,2.8rem)/1.04 var(--sans); letter-spacing:-.01em; margin-bottom:10px}
+.head p{font:400 var(--body)/1.5 var(--sans); color:var(--muted); max-width:58ch}
+
+/* ---------- 3D model-viewer ---------- */
+.mv-shell{position:relative; border-radius:20px; overflow:hidden;
+  background:radial-gradient(ellipse 80% 60% at 50% 8%, rgba(34,211,238,.10), transparent 60%), linear-gradient(180deg,#0c1422,#0a0e16);
+  border:1px solid rgba(255,255,255,.08)}
+model-viewer{width:100%; height:70vh; min-height:380px; background-color:transparent;
+  --poster-color:transparent; --progress-bar-color:var(--cyan); outline:none; display:block}
+.mv-toggle{position:absolute; top:14px; left:14px; z-index:3; display:flex; gap:0;
+  border-radius:11px; overflow:hidden; border:1px solid rgba(255,255,255,.14); background:rgba(11,13,18,.7); backdrop-filter:blur(8px)}
+.mv-toggle button{padding:9px 16px; background:transparent; border:0; color:var(--muted);
+  font:700 .8rem/1 var(--sans); letter-spacing:.02em; cursor:pointer; transition:.2s}
+.mv-toggle button.on{background:var(--cyan); color:#04222a}
+.mv-toggle button:focus-visible{outline:2px solid var(--cyan); outline-offset:-2px}
+.cap{font:600 var(--small)/1.4 var(--mono); color:var(--faint); letter-spacing:.04em; text-align:center; margin-top:14px}
+
+/* ===================== SIGNATURE INTERACTIVE: Antenna demo (harvested) ===================== */
+.demo{display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(18px,3vw,44px); align-items:center; margin-top:8px}
+@media(max-width:940px){.demo{grid-template-columns:1fr; gap:14px}}
+.stage{position:relative; width:100%; aspect-ratio:1/1; max-height:min(58vh,540px); margin:0 auto;
+  border-radius:22px; overflow:hidden; background:
+  radial-gradient(ellipse 80% 50% at 50% 6%,rgba(159,196,226,.16),transparent 60%),
+  linear-gradient(180deg,#0b2233 0%,#0a1a1f 55%,#0a1512 100%);
+  border:1px solid rgba(159,196,226,.16); cursor:grab; touch-action:pan-y}
+.stage:active{cursor:grabbing}
+.stage svg{position:absolute; inset:0; width:100%; height:100%}
+.dvr{transition:transform .14s linear}
+.beam{stroke-linecap:round; transition:stroke .25s,opacity .25s,stroke-width .25s}
+.nub{transition:fill .2s,r .2s}
+.nub.live{filter:drop-shadow(0 0 6px var(--green2))}
+.poselabel{position:absolute; top:12px; left:14px; font:700 var(--small)/1 var(--mono); letter-spacing:.18em;
+  text-transform:uppercase; color:var(--sky); opacity:.9}
+.windtag{position:absolute; top:12px; right:14px; font:600 .66rem/1 var(--mono); letter-spacing:.16em; color:var(--faint)}
+.panel{display:flex; flex-direction:column; gap:14px}
+.screen{position:relative; border-radius:14px; overflow:hidden; aspect-ratio:16/9; background:#04100c;
+  border:1px solid rgba(255,255,255,.1); box-shadow:0 14px 40px rgba(0,0,0,.45)}
+.feed{position:absolute; inset:0; background:
+  linear-gradient(180deg,#16465f 0%,#1d6b6f 42%,#114b3a 43%,#0c3a2c 100%);}
+.feed:before{content:""; position:absolute; inset:0; background:
+  radial-gradient(60% 30% at 30% 30%,rgba(255,255,255,.18),transparent 70%),
+  radial-gradient(50% 24% at 75% 22%,rgba(255,255,255,.12),transparent 70%);
+  animation:feeddrift 9s linear infinite}
+@keyframes feeddrift{from{transform:translateX(8%)}to{transform:translateX(-22%)}}
+.feed:after{content:""; position:absolute; inset:0; background:repeating-linear-gradient(0deg,rgba(255,255,255,.04) 0 1px,transparent 1px 3px); mix-blend-mode:overlay}
+.scrn-hud{position:absolute; inset:0; z-index:2; padding:9px 11px; display:flex; flex-direction:column; justify-content:space-between; font:700 .64rem/1 var(--mono); letter-spacing:.12em}
+.rec{display:inline-flex; align-items:center; gap:6px; color:#fff}
+.rec i{width:8px; height:8px; border-radius:50%; background:var(--red); animation:colive 1.4s steps(1) infinite}
+@keyframes colive{0%,55%{opacity:1}56%,100%{opacity:.25}}
+.tc{align-self:flex-end; color:rgba(255,255,255,.85)}
+.scrn-tag{align-self:flex-start; color:rgba(255,255,255,.9)}
+.screen.lost .feed{filter:saturate(.2) brightness(.6)}
+.screen.lost .feed:before{animation:none; transform:translateX(-6%)}
+.screen.lost:after{content:""; position:absolute; inset:0; z-index:3; pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.07) 0 2px,rgba(0,0,0,.10) 2px 4px);
+  animation:glitchshift .18s steps(2) infinite; mix-blend-mode:screen}
+@keyframes glitchshift{0%{transform:translate(0,0)}50%{transform:translate(-3px,2px)}100%{transform:translate(2px,-1px)}}
+.lostbar{position:absolute; inset:0; z-index:4; display:none; align-items:center; justify-content:center; flex-direction:column; gap:4px;
+  background:rgba(8,4,4,.5); color:#fff; font:800 1rem/1 var(--sans); letter-spacing:.04em; text-align:center}
+.screen.lost .lostbar{display:flex}
+.lostbar small{font:600 .62rem/1.3 var(--mono); letter-spacing:.14em; color:#ffb4ae; opacity:.9}
+.linkrow{display:flex; align-items:center; gap:12px}
+.linkrow .lab{font:700 var(--small)/1 var(--mono); letter-spacing:.16em; color:var(--muted)}
+.bar{flex:1; height:12px; border-radius:7px; background:rgba(255,255,255,.08); overflow:hidden; position:relative}
+.bar i{position:absolute; left:0; top:0; bottom:0; width:100%; border-radius:7px; background:var(--green); transition:width .14s linear,background .25s}
+.pct{font:800 1rem/1 var(--mono); min-width:3.4ch; text-align:right; font-variant-numeric:tabular-nums}
+.statusrow{display:flex; align-items:center; justify-content:space-between; gap:10px}
+.stat{font:800 .82rem/1 var(--sans); letter-spacing:.1em; text-transform:uppercase}
+.cliffnote{font:600 .64rem/1 var(--mono); color:var(--faint); letter-spacing:.1em}
+.ctrls{display:flex; flex-direction:column; gap:11px}
+.poses{display:flex; gap:7px; flex-wrap:wrap}
+.pose{flex:1; min-width:64px; padding:9px 6px; border-radius:10px; border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.03); color:var(--muted); font:700 .72rem/1 var(--sans); letter-spacing:.02em; cursor:pointer; transition:.2s}
+.pose:hover{border-color:rgba(34,211,238,.4); color:var(--ink)}
+.pose.on{background:rgba(34,211,238,.16); border-color:var(--green); color:var(--green2)}
+.pose:focus-visible{outline:2px solid var(--cyan); outline-offset:2px}
+.atoggle{display:flex; align-items:center; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.03)}
+.atoggle button{flex:1; padding:13px 8px; background:transparent; border:0; color:var(--muted); font:800 .82rem/1.1 var(--sans); letter-spacing:.02em; cursor:pointer; transition:.22s}
+.atoggle button small{display:block; font:600 .6rem/1.3 var(--mono); letter-spacing:.08em; color:var(--faint); margin-top:3px}
+.atoggle button.on{background:linear-gradient(180deg,rgba(34,211,238,.25),rgba(34,211,238,.1)); color:var(--ink)}
+.atoggle button.on small{color:var(--green2)}
+.atoggle button:focus-visible{outline:2px solid var(--cyan); outline-offset:-2px}
+.draghint{font:600 var(--small)/1.4 var(--mono); color:var(--faint); letter-spacing:.06em; text-align:center}
+.draghint b{color:var(--sky)}
+
+/* ---------- numbers strip ---------- */
+.numbers{display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-bottom:24px}
+@media(max-width:760px){.numbers{grid-template-columns:repeat(2,1fr)}}
+.num{background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.09); border-radius:14px; padding:20px 16px}
+.num .v{font:800 clamp(1.3rem,3vw,2rem)/1 var(--sans); color:var(--cyan); letter-spacing:-.01em; margin-bottom:7px}
+.num .k{font:600 .72rem/1.3 var(--mono); letter-spacing:.06em; color:var(--muted); text-transform:uppercase}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid rgba(255,255,255,.08); padding-block:42px}
+footer .wrap{display:flex; flex-wrap:wrap; gap:14px 28px; align-items:center; justify-content:space-between}
+footer p{font:500 .9rem/1.5 var(--sans); color:var(--muted)}
+footer a{color:var(--cyan); text-decoration:none; font-weight:600}
+footer a:hover{text-decoration:underline}
+.flinks{display:flex; gap:22px; font:600 .9rem/1 var(--sans)}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important}
+  .feed:before,.feed:after{animation:none !important}
+}
 </style>
 </head>
 <body>
-  <header>
-    <div class="brand">SkyDive·<span class="live">Live</span></div>
-    <div class="tag">HDZero 1 W Live-Stream Sender — MK3, interaktiv in 3D</div>
-  </header>
+<div class="bg" aria-hidden="true"></div>
 
-  <model-viewer id="mv"
-    src="sender_assembled.glb"
-    alt="SkyDive·Live MK3 Sender — 3D"
-    camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="18deg"
-    shadow-intensity="1" exposure="1.05" environment-image="neutral"
-    camera-orbit="35deg 70deg auto" touch-action="pan-y">
-  </model-viewer>
-
-  <div class="toggle">
-    <button id="b-asm" class="on">Zusammengebaut</button>
-    <button id="b-exp">Explosion</button>
+<!-- ========== 1. HERO ========== -->
+<header class="hero">
+  <div class="wrap">
+    <span class="live-pill"><i></i>● Live</span>
+    <h1 class="wordmark">SKYDIVE<span class="dotc">·</span>LIVE</h1>
+    <p class="tagline">The jump. <span class="cy">Live.</span></p>
+    <p class="lede">Real-time video from freefall — the jumper's POV, streamed live from ~4 km up to a receiver at the drop zone, onto the big TV in the waiting area. Own radio link, no internet, ~14 ms latency, Class-E.</p>
+    <div class="chips" role="list" aria-label="Key telemetry">
+      <span class="chip" role="listitem"><b>4000 m</b></span>
+      <span class="chip" role="listitem"><b>200 km/h</b></span>
+      <span class="chip" role="listitem"><b>14 ms</b></span>
+      <span class="chip" role="listitem"><b>4 km</b></span>
+      <span class="chip" role="listitem"><b>1 W</b></span>
+      <span class="chip" role="listitem"><b>Class E</b></span>
+    </div>
+    <div class="btns">
+      <a class="btn btn-ghost" href="https://github.com/SchoenTom/skydive-live">← Back to repo</a>
+      <a class="btn btn-primary" href="https://github.com/SchoenTom/skydive-live/blob/main/decks/pitch_EN.html">Pitch deck</a>
+    </div>
   </div>
-  <div class="hint">↻ ziehen zum Drehen · scrollen zum Zoomen</div>
-  <footer><a href="https://github.com/SchoenTom/skydive-live">→ Projekt, Bauanleitung &amp; die Zahlen</a></footer>
+</header>
+
+<!-- ========== 2. INTERACTIVE 3D ========== -->
+<section id="model">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">The hardware</div>
+      <h2>The sender, in your hands.</h2>
+      <p>A GoPro-form-factor transmitter that rides on the helmet. Drag to inspect it, or pull it apart to see what's inside.</p>
+    </div>
+    <div class="mv-shell">
+      <div class="mv-toggle" role="group" aria-label="Model view">
+        <button id="mvAsm" class="on" aria-pressed="true">Assembled</button>
+        <button id="mvExp" aria-pressed="false">Exploded</button>
+      </div>
+      <model-viewer
+        id="mv"
+        src="sender_assembled.glb"
+        poster="poster_assembled.png"
+        alt="3D model of the SkyDive·Live helmet transmitter"
+        camera-controls
+        auto-rotate
+        reveal="interaction"
+        loading="lazy"
+        shadow-intensity="1"
+        interaction-prompt="auto"
+        ar-status="not-presenting">
+      </model-viewer>
+    </div>
+    <p class="cap">drag to rotate · toggle assembled ↔ exploded</p>
+  </div>
+</section>
+
+<!-- ========== 3. SIGNATURE INTERACTIVE: Antenna demo (harvested) ========== -->
+<section id="antenna">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Play the jump</div>
+      <h2>A body is a shadow.</h2>
+      <p>Spin the jumper head-down. Watch one antenna drop. Switch on the second — the image holds.</p>
+    </div>
+
+    <div class="demo">
+      <!-- LEFT: stage -->
+      <div class="stage" id="stage">
+        <div class="poselabel" id="poseLabel">BELLY</div>
+        <div class="windtag">4000 m · 200 km/h</div>
+        <svg viewBox="0 0 400 400" id="svg" aria-label="Skydiver with two antennas streaming to a ground station">
+          <defs>
+            <radialGradient id="grnd" cx="50%" cy="100%" r="60%"><stop offset="0" stop-color="rgba(34,211,238,.18)"/><stop offset="1" stop-color="transparent"/></radialGradient>
+            <linearGradient id="suit" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#f1f6f2"/><stop offset=".5" stop-color="#bccabf"/><stop offset="1" stop-color="#768c81"/></linearGradient>
+            <linearGradient id="suitDark" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#c9d6cd"/><stop offset="1" stop-color="#5f756b"/></linearGradient>
+            <radialGradient id="helmetG" cx="36%" cy="30%" r="78%">
+              <stop offset="0" stop-color="#eef3ef"/><stop offset=".7" stop-color="#b4c4ba"/><stop offset="1" stop-color="#8a9c92"/></radialGradient>
+          </defs>
+          <rect x="0" y="330" width="400" height="70" fill="url(#grnd)"/>
+          <!-- ground station mast -->
+          <line x1="200" y1="400" x2="200" y2="352" stroke="#3a5a4c" stroke-width="4"/>
+          <g id="gstation"><circle cx="200" cy="350" r="6" fill="#67e8f9"/>
+            <path d="M188 350 a12 12 0 0 1 24 0" fill="none" stroke="#67e8f9" stroke-width="2" opacity=".7"/>
+            <path d="M181 350 a19 19 0 0 1 38 0" fill="none" stroke="#67e8f9" stroke-width="2" opacity=".4"/></g>
+          <!-- beams emanate from the body core (200,172) to the ground station (200,350) -->
+          <path id="beamPatch"  class="beam" d="M196 178 Q150 282 200 348" fill="none" stroke="#22d3ee" stroke-width="6"/>
+          <path id="beamDipole" class="beam" d="M204 168 Q252 282 200 348" fill="none" stroke="#4ec3ec" stroke-width="6" opacity="0"/>
+          <!-- realistic jumper: boxman/arch silhouette, filled with gradient + rim-light -->
+          <g id="diver" transform="rotate(0 200 170)">
+            <g class="dvr">
+              <g fill="none" stroke="url(#suitDark)" stroke-linecap="round" stroke-linejoin="round">
+                <!-- legs: hip -> knee (90deg) -> heel up -->
+                <path d="M189 193 L165 219 L181 248" stroke-width="21"/>
+                <path d="M211 193 L235 219 L219 248" stroke-width="21"/>
+                <!-- arms (boxman): shoulder -> elbow -> hands at eye level -->
+                <path d="M181 157 L151 145 L157 117" stroke-width="18"/>
+                <path d="M219 157 L249 145 L243 117" stroke-width="18"/>
+              </g>
+              <!-- boots + hands -->
+              <g fill="#39474155"><circle cx="181" cy="250" r="10"/><circle cx="219" cy="250" r="10"/></g>
+              <circle cx="157" cy="115" r="8.5" fill="#dde4df"/><circle cx="243" cy="115" r="8.5" fill="#dde4df"/>
+              <!-- torso, slightly arched, gradient filled -->
+              <path d="M180 152 Q200 145 220 152 Q224 176 215 197 Q200 206 185 197 Q176 176 180 152 Z" fill="url(#suit)"/>
+              <!-- rim-light on torso (top-left) -->
+              <path d="M181 153 Q200 146 214 151" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" opacity=".55"/>
+              <!-- neck + helmet -->
+              <rect x="193" y="138" width="14" height="13" rx="5" fill="#92a59b"/>
+              <circle cx="200" cy="125" r="18" fill="url(#helmetG)"/>
+              <path d="M188 119 a16 16 0 0 1 18 -8" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+              <!-- visor -->
+              <path d="M186 128 q14 9 28 0 q-3 8 -14 8 q-11 0 -14 -8 Z" fill="#2c3a40" opacity=".55"/>
+              <!-- THE SENDER on the helmet (our product) -->
+              <rect x="191" y="104" width="18" height="10" rx="2.4" fill="#12181c"/>
+              <rect x="191" y="104" width="18" height="3.2" rx="2" fill="#33342f" opacity=".7"/>
+            </g>
+            <!-- antenna nubs on the sender: patch (belly side) / dipole (sky side) -->
+            <circle id="nubPatch"  class="nub live" cx="195" cy="116" r="6" fill="#22d3ee"/>
+            <circle id="nubDipole" class="nub" cx="205" cy="103" r="5" fill="#2a6f88"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- RIGHT: drop-zone screen + link + controls -->
+      <div class="panel">
+        <div class="screen" id="screen">
+          <div class="feed"></div>
+          <div class="scrn-hud"><span class="rec"><i></i>LIVE</span><span class="scrn-tag" id="scrnTag">BELLY · 4-WAY</span><span class="tc" id="tc">00:12:04</span></div>
+          <div class="lostbar">NO SIGNAL<small id="lostWhy">antenna blocked by body</small></div>
+        </div>
+        <div class="linkrow"><span class="lab">LINK</span><div class="bar"><i id="linkFill"></i></div><span class="pct" id="linkPct">100%</span></div>
+        <div class="statusrow"><span class="stat" id="statTxt">● LIVE — image holds</span><span class="cliffnote">drop &lt; 25 %</span></div>
+        <div class="ctrls">
+          <div class="poses" id="poses">
+            <button class="pose on" data-t="0">Belly</button>
+            <button class="pose" data-t="90">Sit</button>
+            <button class="pose" data-t="180">Head-down</button>
+            <button class="pose" data-t="270">Back</button>
+          </div>
+          <div class="atoggle" id="atoggle">
+            <button data-a="1" class="on">1 antenna<small>patch only</small></button>
+            <button data-a="2">2 antennas<small>patch + dipole</small></button>
+          </div>
+          <div class="draghint">↻ <b>Drag the jumper</b> · or pick a pose · then switch on <b>2 antennas</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 4. THE NUMBERS ========== -->
+<section id="numbers">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">The numbers</div>
+      <h2>Closing 4 km of sky.</h2>
+    </div>
+    <div class="numbers">
+      <div class="num"><div class="v">119.8 dB</div><div class="k">FSPL @ 4 km</div></div>
+      <div class="num"><div class="v">+9 dB</div><div class="k">link margin</div></div>
+      <div class="num"><div class="v">≈ 6 K</div><div class="k">ΔT freefall</div></div>
+      <div class="num"><div class="v">~14 ms</div><div class="k">latency</div></div>
+      <div class="num"><div class="v">1 W</div><div class="k">TX power</div></div>
+    </div>
+    <p class="cap" style="text-align:left">Full link budget &amp; thermal model: <a href="https://github.com/SchoenTom/skydive-live/blob/main/ENGINEERING.md" style="color:var(--cyan);font-weight:700;text-decoration:none">ENGINEERING.md →</a></p>
+  </div>
+</section>
+
+<!-- ========== 5. FOOTER ========== -->
+<footer>
+  <div class="wrap">
+    <p>SkyDive·Live — solo-built, prototype stage. CC-BY-4.0.</p>
+    <div class="flinks">
+      <a href="https://github.com/SchoenTom/skydive-live">Repository</a>
+      <a href="https://github.com/SchoenTom">@SchoenTom</a>
+    </div>
+  </div>
+</footer>
 
 <script>
-  const mv=document.getElementById('mv'), bAsm=document.getElementById('b-asm'), bExp=document.getElementById('b-exp');
-  function set(src, on){ mv.setAttribute('src', src); bAsm.classList.toggle('on', on==='asm'); bExp.classList.toggle('on', on==='exp'); }
-  bAsm.onclick=()=>set('sender_assembled.glb','asm');
-  bExp.onclick=()=>set('sender_exploded.glb','exp');
+/* ---------- 3D model toggle ---------- */
+(function(){
+  const mv=document.getElementById('mv');
+  const bAsm=document.getElementById('mvAsm'), bExp=document.getElementById('mvExp');
+  if(!mv) return;
+  function set(asm){
+    mv.setAttribute('src', asm?'sender_assembled.glb':'sender_exploded.glb');
+    mv.setAttribute('poster', asm?'poster_assembled.png':'poster_exploded.png');
+    bAsm.classList.toggle('on',asm); bExp.classList.toggle('on',!asm);
+    bAsm.setAttribute('aria-pressed',String(asm)); bExp.setAttribute('aria-pressed',String(!asm));
+  }
+  bAsm.addEventListener('click',()=>set(true));
+  bExp.addEventListener('click',()=>set(false));
+})();
+
+/* ---------- ANTENNA DEMO (signature, harvested) ---------- */
+(function(){
+  const stage=document.getElementById('stage'); if(!stage) return;
+  const diver=document.getElementById('diver'), bP=document.getElementById('beamPatch'), bD=document.getElementById('beamDipole');
+  const nP=document.getElementById('nubPatch'), nD=document.getElementById('nubDipole');
+  const fill=document.getElementById('linkFill'), pct=document.getElementById('linkPct'), stat=document.getElementById('statTxt');
+  const screen=document.getElementById('screen'), lostWhy=document.getElementById('lostWhy'), scrnTag=document.getElementById('scrnTag'), poseLabel=document.getElementById('poseLabel'), tc=document.getElementById('tc');
+  const poses=document.getElementById('poses'), atoggle=document.getElementById('atoggle');
+  let theta=0, target=0, ants=1, dragging=false, lastX=0, idle=0, tcSec=12*60+4;
+  const POSE=[['BELLY','BELLY · 4-WAY',0],['SITFLY','SIT · FREEFLY',90],['HEAD-DOWN','HEAD-DOWN',180],['BACKTRACK','BACKTRACK',270]];
+  const rad=d=>d*Math.PI/180;
+  function cov(th){ // returns [patch,dipole] 0..1
+    const c=Math.cos(rad(th));
+    let p=0.5+0.5*c, d=0.5-0.5*c;
+    // subtle realism: shallow nulls near the sides
+    p*=0.93+0.07*Math.cos(rad(th*2)); d*=0.93+0.07*Math.cos(rad(th*2+180));
+    return [Math.max(0,p),Math.max(0,d)];
+  }
+  function lerpAngle(a,b,t){let d=((b-a+540)%360)-180;return a+d*t;}
+  function poseName(th){ // nearest pose label
+    let best=0,bd=999; for(let i=0;i<POSE.length;i++){let d=Math.abs(((POSE[i][2]-th+540)%360)-180);if(d<bd){bd=d;best=i;}}return POSE[best];
+  }
+  function render(){
+    const [p,d]=cov(theta);
+    const carry = (ants===2)? Math.max(p,d) : p;
+    const usingDipole = (ants===2 && d>p);
+    diver.setAttribute('transform',`rotate(${theta} 200 170)`);
+    // patch beam color by its own coverage
+    const col=v=> v>0.45?'#22d3ee': v>0.25?'#edab28':'#ef5a4f';
+    bP.setAttribute('stroke', (ants===2 && usingDipole)? '#2f5a3f' : col(p));
+    bP.setAttribute('opacity', (0.25+0.75*p).toFixed(2));
+    bP.setAttribute('stroke-width',(3+5*p).toFixed(1));
+    bD.setAttribute('opacity', ants===2? (0.18+0.8*d).toFixed(2):'0');
+    bD.setAttribute('stroke', usingDipole? '#4ec3ec':'#2a6f88');
+    bD.setAttribute('stroke-width',(3+5*d).toFixed(1));
+    nP.classList.toggle('live', !usingDipole && carry>0.25);
+    nD.classList.toggle('live', usingDipole && carry>0.25);
+    nP.setAttribute('fill', usingDipole? '#2f5a3f' : col(p));   // patch nub follows its own coverage
+    nD.setAttribute('fill', ants===2? (usingDipole?'#4ec3ec':'#2a6f88') : '#244');
+    // link
+    const v=Math.round(carry*100);
+    fill.style.width=v+'%';
+    fill.style.background= carry>0.45?'#22d3ee': carry>0.25?'#edab28':'#ef5a4f';
+    pct.textContent=v+'%'; pct.style.color=fill.style.background;
+    const live=carry>=0.25;
+    screen.classList.toggle('lost',!live);
+    if(live){stat.textContent= usingDipole?'● LIVE — dipole takes over':'● LIVE — image holds'; stat.style.color='#67e8f9';}
+    else{stat.textContent='✕ SIGNAL LOST'; stat.style.color='#ef5a4f';}
+    lostWhy.textContent = ants===1? 'patch blocked by body — 2nd antenna missing' : 'both antennas shadowed';
+    const pn=poseName(theta); poseLabel.textContent=pn[0]; scrnTag.textContent=pn[1];
+    [...poses.children].forEach(b=>b.classList.toggle('on',+b.dataset.t===pn[2]));  // nearest pose, not rounded theta
+  }
+  function tick(){
+    theta=lerpAngle(theta,target,0.16);
+    if(!dragging){idle++; if(idle>150){target=(target+0.6)%360;}}  // gentle auto-orbit when idle
+    render(); requestAnimationFrame(tick);
+  }
+  // timecode ticker
+  setInterval(()=>{tcSec++;const m=String(Math.floor(tcSec/60)).padStart(2,'0'),s=String(tcSec%60).padStart(2,'0');tc.textContent='00:'+m+':'+s;},1000);
+  // drag
+  stage.addEventListener('pointerdown',e=>{dragging=true;idle=0;lastX=e.clientX;try{stage.setPointerCapture(e.pointerId);}catch(_){}});
+  stage.addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-lastX;lastX=e.clientX;target=(target+dx*0.9+360)%360;theta=target;idle=0;});
+  stage.addEventListener('pointerup',e=>{dragging=false;idle=0;});
+  stage.addEventListener('pointercancel',()=>{dragging=false;});
+  // poses
+  poses.addEventListener('click',e=>{const b=e.target.closest('.pose');if(!b)return;target=+b.dataset.t;idle=0;});
+  // antenna toggle
+  atoggle.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;ants=+b.dataset.a;
+    [...atoggle.children].forEach(x=>x.classList.toggle('on',x===b));idle=0;render();});
+  render(); requestAnimationFrame(tick);
+})();
 </script>
 </body>
 </html>
