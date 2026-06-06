@@ -36,7 +36,7 @@
 | Boden, Alu passiv | Q≤10 W | ~25 K | ~50 °C | ✅ |
 | **Freifall, v=50 m/s, Alu** | Q=14 W | **~6 K** | ~−9 °C (4 000 m) | **✅ deutlich** |
 
-**Der entscheidende Hebel:** Im Freifall steht das Alu-Gehäuse im **~200 km/h Fahrtwind** → erzwungene Konvektion `h ≈ 90 W/m²K`, `R_th = 1/(90·0,026 m²) =` **0,43 K/W** → `ΔT = 14·0,43 =` **6 K**. Die thermische Masse (C ≈ 170 J/K) puffert die 60 s Freifall mühelos — **Doktrin: VTX erst ≤ 10 min vor dem Absprung einschalten, er startet kalt.**
+**Der entscheidende Hebel:** Im Freifall steht das Alu-Gehäuse im **Freifall-Fahrtwind** (≥55 m/s — schneller kühlt nur mehr) → erzwungene Konvektion `h ≈ 90 W/m²K`, `R_th = 1/(90·0,026 m²) =` **0,43 K/W** → `ΔT = 14·0,43 =` **6 K**. Die thermische Masse (C ≈ 170 J/K) puffert die 60 s Freifall mühelos — **Doktrin: VTX erst ≤ 10 min vor dem Absprung einschalten, er startet kalt.**
 
 **Hardware-Schutz** (ATtiny + NTC, Schaltung verifiziert): Lüfter an 45 °C · OSD-Warnung 65 °C · **VTX-Cutoff 75 °C** (5 K Reserve unter ~80 °C Limit) · Wiedereinschalten 55 °C.
 
