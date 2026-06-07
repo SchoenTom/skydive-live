@@ -612,5 +612,29 @@ section + section{border-top:1px solid rgba(255,255,255,.055)}
   if(document.readyState==='complete')init();else window.addEventListener('load',init);
 })();
 </script>
+<script>/* SkyDive·Live WebGL fallback — never show an empty 3D box */
+(function(){
+  function webglOK(){try{var c=document.createElement('canvas');return !!(window.WebGLRenderingContext&&(c.getContext('webgl2')||c.getContext('webgl')||c.getContext('experimental-webgl')));}catch(e){return false;}}
+  function run(){
+    if(webglOK())return;            // 3D funktioniert -> nichts tun
+    document.querySelectorAll('model-viewer').forEach(function(mv){
+      var p=mv.getAttribute('poster');
+      if(p){ mv.style.backgroundImage='url("'+p+'")'; mv.style.backgroundSize='contain';
+             mv.style.backgroundPosition='center'; mv.style.backgroundRepeat='no-repeat'; }
+      mv.setAttribute('reveal','manual');
+      if(!mv.querySelector('.mv-noweb')){
+        var h=document.createElement('div'); h.className='mv-noweb';
+        h.textContent='Statische Ansicht · drehbares 3D in Safari, oder in Chrome unter Einstellungen → System → Grafikbeschleunigung aktivieren';
+        h.style.cssText='position:absolute;left:8px;right:8px;bottom:8px;z-index:5;text-align:center;'+
+          'font:11px/1.45 -apple-system,system-ui,sans-serif;color:#9fc;opacity:.72;pointer-events:none;'+
+          'text-shadow:0 1px 4px rgba(0,0,0,.6)';
+        if(getComputedStyle(mv).position==='static')mv.style.position='relative';
+        mv.appendChild(h);
+      }
+    });
+  }
+  if(document.readyState!=='loading')run();else window.addEventListener('DOMContentLoaded',run);
+})();
+</script>
 </body>
 </html>
