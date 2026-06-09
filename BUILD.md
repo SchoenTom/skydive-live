@@ -97,5 +97,5 @@ Same A–F discipline as MK2, **plus**: dipole/RF‑switch continuity, the **flu
 
 - **Bill of materials:** [`BOM.md`](BOM.md) (sender, ground station, measurement gear).
 - **Fasteners:** brass heat‑sets (M2/M3), an M5×0.8 GoPro thumbscrew, Loctite 243 (never high‑strength on M2).
-- **Safety / RF:** LiPo charged externally only; conformal coating against cloud moisture; transmit power is regulated — operate under an amateur‑radio Class‑E licence (PMSE short‑term for the championship demo). See [`LICENSE`](LICENSE).
+- **Safety / RF:** LiPo charged externally only; conformal coating against cloud moisture; transmit power is regulated — develop and test at licence‑free 25 mW SRD, run event operation under a PMSE short‑term assignment. See [`DISCLAIMER.md`](DISCLAIMER.md).
 - **Honest status:** CAD done (watertight, 0 collisions, fastening). Open next: first print, VTX thermal measurement, S11 antenna measurement, test jump. Calculated values are marked as such — no overclaiming.

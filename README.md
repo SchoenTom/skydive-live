@@ -48,7 +48,7 @@ Camera (MIPI) → 1 W VTX → U.FL → antenna(s) → ~4 km of air → ground an
 
 ## Two generations. One idea.
 
-Hundreds of iterations distilled into **two purpose-built designs** — a proven foundation, and a leap that solves the one moment that breaks every single-antenna link.
+Eleven housing generations and hundreds of scripted CAD checks, distilled into **two purpose-built designs** — a proven foundation, and a leap that attacks the one moment that breaks every single-antenna link.
 
 <div align="center">
 <img src="renders/two_generations.png" alt="Two generations side by side: Gen 1 MK2 (the foundation) and Gen 2 v5 (never lose the image)" width="100%">
@@ -92,20 +92,20 @@ Every block has its place — justified thermally and by RF. **Colour = componen
 This is not a hobby gamble. Every critical path is calculated, and **honestly split into *calculated* vs *to-be-measured*.**
 
 <div align="center">
-<img src="renders/closing_4km.svg" alt="Link budget: +30 dBm transmit, +18 dB antenna gain, −119.8 dB free-space loss at 4 km, −5 dB cable and polarisation, −90 dBm threshold → +13.2 dB belly margin; head-down recovered to +2.0 dB by the dual antenna." width="100%">
+<img src="renders/closing_4km.svg" alt="Link budget: +30 dBm transmit, −119.8 dB free-space loss at 4 km, −90 dBm conservative threshold → about +8 dB belly margin at a favourable heading; the dipole and ground diversity floor the worst heading at about +2 dB, and head-down rides the threshold — which is why the next step is a turntable measurement." width="100%">
 </div>
 
 | | value | |
 |---|---|---|
-| 📡 **Transmit power** | +30 dBm (1 W) — well under the 5 W Class-E limit | compliant |
+| 📡 **Transmit power** | +30 dBm (1 W) — PMSE short-term assignment for the event, 25 mW SRD for all tests | planned path |
 | 📡 **Free-space loss @ 4 km** | 119.8 dB (5.8 GHz, Friis) | ✅ derived |
-| 📡 **Link margin @ 4 km** | **+13.2 dB** belly · **+2.0 dB** head-down with the dual antenna | calculated |
-| 📡 **Zero-margin range** | belly ≈ 18 km — so 4 km is deliberately conservative | calculated |
+| 📡 **Link margin @ 4 km** | **≈ +8 dB** belly (favourable heading) · **≈ +2 dB** worst heading via the dipole · head-down rides the threshold | calculated, v5 geometry |
+| 📡 **The honest twist** | the side-mounted patch makes belly margin *heading-dependent* — re-run 2026-06, assumptions & sensitivity in [ENGINEERING.md](ENGINEERING.md) | self-corrected |
 | 🌡 **Thermals in freefall** | ΔT **≈ 6 K** — ram-air convection carries the VTX heat | calculated |
 | 🔋 **Runtime** | ~40 min theoretical / ~32 min practical | dimensioned |
 | ⚖️ **Sender mass** | ~200–250 g | dimensioned |
 
-> **The hard case (head-down — falling head-first)** is identified *and solved*: the body-shadow penalty → dual antenna at the sender **plus** diversity at the ground. The real proof comes with the first jump — **no overclaiming.**
+> **The hard case (head-down — falling head-first)** is identified and attacked at the source: dual antenna at the sender **plus** diversity at the ground — the architecture of the only proven precedent (Corliss/Vislink 2016). The recalculated margins are thinner than the first pass and say *fluctuating link, not dead link*; the turntable pattern measurement of the assembled sender decides it. **No overclaiming** — when our own numbers got worse, we published the worse numbers.
 
 ---
 
@@ -168,10 +168,10 @@ A monitor on a tripod catches the signal over **two antennas** (omni + direction
 
 Everything is parametric and scriptable:
 
-- 🧊 **Interactive 3D** — [spin the model in your browser](https://schoentom.github.io/skydive-live/) (assembled ↔ exploded). Source GLBs: [`models/`](models/).
+- 🧊 **Interactive 3D** — [spin the model in your browser](https://schoentom.github.io/skydive-live/) (assembled ↔ exploded). GLBs ship with the **[v1.0 release](../../releases/tag/v1.0)**.
 - 🛠 **Stack** — `build123d` (parametric CAD in Python) · custom build/verify pipeline · RF link-budget · thermal (convection / flat-plate) · regulatory (AFuV / Class E) · DFM for FDM printing.
 - 📋 **[`BOM.md`](BOM.md)** — full bill of materials (sender, ground station, measurement gear).
-- 🎞 **Pitch decks — tap to open on any device** (phone · tablet · Mac · Windows, nothing to install): **[open the pitches →](https://schoentom.github.io/skydive-live/decks/)**. The flagship is the playable [v5 "never lose the picture"](https://schoentom.github.io/skydive-live/decks/dual_antenna_EN.html) (EN/DE). Each deck also has a **PDF** for offline/email.
+- 🎞 **Pitch decks — tap to open on any device** (phone · tablet · Mac · Windows, nothing to install): **[open the pitches →](https://schoentom.github.io/skydive-live/decks/)**. The flagship is the playable [v5 "never lose the picture"](https://schoentom.github.io/skydive-live/decks/dual_antenna_EN.html) (EN/DE).
 
 ---
 
@@ -185,8 +185,18 @@ Ambitious engineering project **in development** — not a finished product, not
 
 ---
 
+## Follow the first jump
+
+Nothing here carries a *measured* badge yet — that is the point of what happens next: first print, thermal measurement, antenna pattern on a turntable, then the first test jump.
+
+- ⭐ **Watch / star this repo** — releases will carry the first real measurements and, eventually, the first freefall footage from the system itself.
+- 🔧 **Building one, or flying camera and have opinions?** Open an [issue](../../issues) — helmet-setup input from real jumpers shapes the next housing revision.
+- 🪂 **Drop zone, federation or event?** Reach out via the [GitHub profile](https://github.com/SchoenTom).
+
+---
+
 ## Honest note
 
-A solo-built, prototype-stage project shared in full. Renders are from the project's own CAD; calculated values are marked as such and separated from what still has to be measured. Transmit power is regulated — operation here is framed around an amateur-radio **Class E** licence (with PMSE short-term assignment for the championship demo).
+A solo-built, prototype-stage project shared in full. Renders are from the project's own CAD; calculated values are marked as such and separated from what still has to be measured — and when a recalculation makes a number worse, the worse number gets published (see the 2026-06 link-budget revision in [ENGINEERING.md](ENGINEERING.md)). Transmit power is regulated: the plan of record is a **PMSE short-term frequency assignment** for event operation and licence-free **25 mW SRD** for all development tests. See [`DISCLAIMER.md`](DISCLAIMER.md).
 
 <sub>License: <a href="LICENSE">CC-BY-4.0</a> · Renders &amp; 3D: own CAD (build123d) · Made by <a href="https://github.com/SchoenTom">@SchoenTom</a></sub>

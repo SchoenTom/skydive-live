@@ -10,15 +10,15 @@
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="SkyDive·Live — The jump. Live.">
-<meta property="og:description" content="Real-time video from freefall — the jumper's POV, live to the drop zone. Own radio link, ~14 ms latency, Class-E.">
-<meta property="og:image" content="og.png">
+<meta property="og:description" content="Real-time video from freefall — the jumper's POV, live to the drop zone. Own radio link, ~14 ms latency, dual antenna.">
+<meta property="og:image" content="https://schoentom.github.io/skydive-live/og.png">
 <meta property="og:url" content="https://schoentom.github.io/skydive-live/">
 <meta property="og:site_name" content="SkyDive·Live">
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="SkyDive·Live — The jump. Live.">
 <meta name="twitter:description" content="Real-time video from freefall — the jumper's POV, live to the drop zone.">
-<meta name="twitter:image" content="og.png">
+<meta name="twitter:image" content="https://schoentom.github.io/skydive-live/og.png">
 
 <script type="module" src="vendor/model-viewer.min.js"></script>
 
@@ -448,15 +448,15 @@ section + section{border-top:1px solid rgba(255,255,255,.055)}
       <div class="eyebrow">The numbers</div>
       <h2>Closing 4 km of sky.</h2>
     </div>
-    <img src="closing_4km.svg" alt="Link budget closing 4 km: +30 dBm transmit, +18 dB antenna gain, −119.8 dB free-space loss, −5 dB cable and polarisation, −90 dBm threshold, +13.2 dB belly margin; head-down recovered to +2.0 dB by the dual antenna." style="width:100%;border-radius:16px;border:1px solid rgba(255,255,255,.08);display:block;margin-bottom:24px">
+    <img src="closing_4km.svg" alt="Link budget closing 4 km: +30 dBm transmit, −119.8 dB free-space loss, −5 dB cable and polarisation, −90 dBm conservative threshold → about +8 dB belly margin at a favourable heading; the dipole floors the worst heading at about +2 dB, and head-down rides the threshold. Recalculated 2026-06 for the v5 side-patch geometry." style="width:100%;border-radius:16px;border:1px solid rgba(255,255,255,.08);display:block;margin-bottom:24px">
     <div class="numbers">
       <div class="num"><div class="v">119.8 dB</div><div class="k">FSPL @ 4 km</div></div>
-      <div class="num"><div class="v">+13.2 dB</div><div class="k">belly link margin</div></div>
+      <div class="num"><div class="v">≈ +8 dB</div><div class="k">belly margin · calc</div></div>
       <div class="num"><div class="v">≈ 6 K</div><div class="k">ΔT freefall</div></div>
       <div class="num"><div class="v">~14 ms</div><div class="k">latency</div></div>
       <div class="num"><div class="v">1 W</div><div class="k">TX power</div></div>
     </div>
-    <p style="text-align:left;font:500 .96rem/1.5 var(--sans);color:var(--muted)">Worst-case omni TX, unfavourable attitude — full link budget &amp; thermal model in <a href="https://github.com/SchoenTom/skydive-live/blob/main/ENGINEERING.md" style="color:var(--cyan);font-weight:700;text-decoration:none">ENGINEERING.md →</a></p>
+    <p style="text-align:left;font:500 .96rem/1.5 var(--sans);color:var(--muted)">Calculated, not yet measured — and re-run 2026-06 for the real v5 side-patch geometry, which made the numbers <em>smaller</em> and got published anyway. Full budget, assumptions &amp; sensitivity in <a href="https://github.com/SchoenTom/skydive-live/blob/main/ENGINEERING.md" style="color:var(--cyan);font-weight:700;text-decoration:none">ENGINEERING.md →</a></p>
   </div>
 </section>
 
